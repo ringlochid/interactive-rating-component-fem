@@ -14,6 +14,10 @@
 
   <style>
 
+    * {
+      box-sizing: border-box;
+    }
+
     html, body {
       margin: 0;
       padding: 0;
@@ -25,7 +29,11 @@
       background: var(--colors-grey-950, #131518);
     }
 
-    main {
+    main {}
+
+    .deactivate {display: none !important;}
+
+    .rating-page {
       box-sizing: border-box;
       width: min(25.75rem, 87.2svw);
       display: flex;
@@ -33,7 +41,23 @@
       flex-direction: column;
       justify-content: center;
       align-items: start;
-      gap: var(--spacing-200, 1rem);
+      gap: var(--spacing-400, 2rem);
+      border-radius: 0.9375rem;
+      background: radial-gradient(98.96% 98.96% at 50% 0%, #232A34 0%, #181E27 100%);
+      @media (width < 768px) {
+        padding: var(--spacing-300, 1.5rem);
+      }
+    }
+
+    .success-page {
+      box-sizing: border-box;
+      width: min(25.75rem, 87.2svw);
+      display: flex;
+      padding: var(--spacing-400, 2rem) var(--spacing-300, 1.5rem);
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: var(--spacing-400, 2rem);
       border-radius: 0.9375rem;
       background: radial-gradient(98.96% 98.96% at 50% 0%, #232A34 0%, #181E27 100%);
     }
@@ -62,11 +86,15 @@
       border: 0;
       display: flex;
       flex-direction: column;
+      align-items: start;
+      justify-content: center;
       gap: var(--spacing-400, 2rem);
+      box-sizing: border-box;
     }
 
     .text-content {
       display: flex;
+      width: 100%;
       flex-direction: column;
       align-items: flex-start;
       gap: var(--spacing-200, 1rem);
@@ -106,10 +134,9 @@
     .submit-btn {
       width: 100%;
       display: flex;
-      padding: 0.78rem var(--spacing-1700, 8.5rem);
+      padding: 0.78rem 0;
       justify-content: center;
       align-items: center;
-      gap: var(--spacing-200, 1rem);
       border-radius: 1.40625rem;
       background: var(--colors-orange-500, #FC7614);
       border: 0;
@@ -133,6 +160,9 @@
       gap: var(--spacing-300, 1.5rem);
       border: 0;
       padding: 0;
+      @media (width < 768px) {
+        gap: var(--spacing-200, 1rem);
+      }
     }
 
     .sr-only {
@@ -157,6 +187,10 @@
       background: var(--colors-grey-900, #262E38);
       transition: ease-in-out 0.3s;
       box-sizing: border-box;
+      @media (width < 768px) {
+        width: 2.625rem;
+        height: 2.625rem;
+      }
     }
 
     .rating-content span {
@@ -188,7 +222,81 @@
       outline: 2px solid var(--colors-orange-500, #FC7614);
       outline-offset: 2px;
     }
-    
+
+    .success-icon {
+      width: 10.125rem;
+      height: 6.75rem;
+    }
+
+    .rated-score {
+      display: flex;
+      height: 2rem;
+      padding: var(--spacing-0, 0) var(--spacing-200, 1rem);
+      justify-content: center;
+      align-items: center;
+      gap: var(--spacing-100, 0.5rem);
+      border-radius: 1.40625rem;
+      background: var(--colors-grey-900, #262E38);
+    }
+
+    .rated-score span {
+      display: block;
+      color: var(--colors-orange-500, #FC7614);
+      text-align: center;
+      font-feature-settings: 'liga' off, 'clig' off;
+      /* Text Preset 4 (Regular) - Overpass Regular - 15px - 24px Line Height - 0px Line Spacing */
+      font-family: Overpass;
+      font-size: 0.9375rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 1.5rem; /* 160% */
+    }
+
+    .success-message-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--spacing-200, 1rem);
+      align-self: stretch;
+    }
+
+    .success-message-container h1 {
+      margin: 0;
+      padding: 0;
+      align-self: stretch;
+      color: var(--colors-white, #FFF);
+      text-align: center;
+      font-feature-settings: 'liga' off, 'clig' off;
+
+      /* Text Preset 1 - Overpass Bold - 28px - 35px Line Height - 0px Line Spacing */
+      font-family: Overpass;
+      font-size: 1.75rem;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 2.1875rem; /* 125% */
+    }
+
+    .success-message-container p {
+      align-self: stretch;
+      color: var(--colors-grey-500, #969FAD);
+
+      text-align: center;
+      font-feature-settings: 'liga' off, 'clig' off;
+
+      /* Text Preset 4 (Regular) - Overpass Regular - 15px - 24px Line Height - 0px Line Spacing */
+      font-family: Overpass;
+      font-size: 0.9375rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 1.5rem; /* 160% */
+    }
+
+    .error-msg {
+      color: var(--colors-red-500, #FF5500);
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
   </style>
 
 </head>
@@ -196,46 +304,63 @@
 
   <main>
 
-    <button class="icon-wrapper" type="button">
-      <img src="images/icon-star.svg" alt="star">
-    </button>
+    <div class="rating-page">
+      <button class="icon-wrapper" type="button">
+        <img src="images/icon-star.svg" alt="star">
+      </button>
 
-    <form>
-      <div class="form-body">
-        
-        <div class="text-content">
-          <h1 id="rating-title">How did we do?</h1>
-          <p id="rating-desc">
-            Please let us know how we did with your support request. All feedback is appreciated to help us improve our offering!
-          </p>
+      <form>
+        <div class="form-body">
+          
+          <div class="text-content">
+            <h1 id="rating-title">How did we do?</h1>
+            <p id="rating-desc">
+              Please let us know how we did with your support request. All feedback is appreciated to help us improve our offering!
+            </p>
 
-          <fieldset class="rating-container" aria-labelledby="rating-title" aria-describedby="rating-desc">
-            
-            <legend class="sr-only">Rating: 1 to 5</legend>
+            <fieldset class="rating-container" aria-labelledby="rating-title" aria-describedby="rating-desc">
+              
+              <legend class="sr-only">Rating: 1 to 5</legend>
 
-            <input type="radio" name="rating" id="rating-1" class="sr-only" value="1">
-            <label for="rating-1" class="rating-content"><span>1</span></label> 
+              <input type="radio" name="rating" id="rating-1" class="sr-only" value="1">
+              <label for="rating-1" class="rating-content"><span>1</span></label> 
 
-            <input type="radio" name="rating" id="rating-2" class="sr-only" value="2">
-            <label for="rating-2" class="rating-content"><span>2</span></label> 
+              <input type="radio" name="rating" id="rating-2" class="sr-only" value="2">
+              <label for="rating-2" class="rating-content"><span>2</span></label> 
 
-            <input type="radio" name="rating" id="rating-3" class="sr-only" value="3">
-            <label for="rating-3" class="rating-content"><span>3</span></label> 
+              <input type="radio" name="rating" id="rating-3" class="sr-only" value="3">
+              <label for="rating-3" class="rating-content"><span>3</span></label> 
 
-            <input type="radio" name="rating" id="rating-4" class="sr-only" value="4">
-            <label for="rating-4" class="rating-content"><span>4</span></label> 
+              <input type="radio" name="rating" id="rating-4" class="sr-only" value="4">
+              <label for="rating-4" class="rating-content"><span>4</span></label> 
 
-            <input type="radio" name="rating" id="rating-5" class="sr-only" value="5">
-            <label for="rating-5" class="rating-content"><span>5</span></label> 
-          </fieldset>
+              <input type="radio" name="rating" id="rating-5" class="sr-only" value="5">
+              <label for="rating-5" class="rating-content"><span>5</span></label> 
+            </fieldset>
+          </div>
+
+          <input class="submit-btn" type="submit" value="SUBMIT"/>
         </div>
+      </form>
+    </div>
 
-        <input class="submit-btn" type="submit" value="SUBMIT"/>
+    <div class="success-page deactivate">
+
+      <img class="success-icon" alt="success" src="images/illustration-thank-you.svg"/>
+
+      <aside class="rated-score">
+        <span>You selected 4 out of 5</span>
+      </aside>
+
+      <div class="success-message-container">
+        <h1>Thank you!</h1>
+        <p>We appreciate you taking the time to give a rating. If you ever need more support, don’t hesitate to get in touch!</p>
       </div>
-    </form> 
+      
+    </div>
 
   </main>
 
-
 </body>
+<script src="script.js"></script>
 </html>
