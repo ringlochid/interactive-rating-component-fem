@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;700&display=swap" rel="stylesheet">
+  
+  <title>Interactive rating component</title>
+
+  <style>
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100svh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden;
+      background: var(--colors-grey-950, #131518);
+    }
+
+    main {
+      box-sizing: border-box;
+      width: min(25.75rem, 87.2svw);
+      display: flex;
+      padding: var(--spacing-400, 2rem) var(--spacing-300, 1.5rem);
+      flex-direction: column;
+      justify-content: center;
+      align-items: start;
+      gap: var(--spacing-200, 1rem);
+      border-radius: 0.9375rem;
+      background: radial-gradient(98.96% 98.96% at 50% 0%, #232A34 0%, #181E27 100%);
+    }
+
+    .icon-wrapper {
+      display: flex;
+      width: 3rem;
+      height: 3rem;
+      padding: var(--spacing-200, 1rem);
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: var(--spacing-100, 0.5rem);
+      border-radius: 1.5rem;
+      background: var(--colors-grey-900, #262E38);
+      border: 0;
+    }
+
+    .icon-wrapper img {
+      flex-shrink: 0;
+    }
+
+    .form-body {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-400, 2rem);
+    }
+
+    .text-content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--spacing-200, 1rem);
+      align-self: stretch;
+    }
+
+    .text-content h1 {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      color: var(--colors-white, #FFF);
+      font-feature-settings: 'liga' off, 'clig' off;
+
+      /* Text Preset 1 - Overpass Bold - 28px - 35px Line Height - 0px Line Spacing */
+      font-family: Overpass;
+      font-size: 1.75rem;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 2.1875rem; /* 125% */
+    }
+
+    .text-content p {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      color: var(--colors-grey-500, #969FAD);
+      font-feature-settings: 'liga' off, 'clig' off;
+
+      /* Text Preset 4 (Regular) - Overpass Regular - 15px - 24px Line Height - 0px Line Spacing */
+      font-family: Overpass;
+      font-size: 0.9375rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 1.5rem; /* 160% */
+    }
+
+    .submit-btn {
+      width: 100%;
+      display: flex;
+      padding: 0.78rem var(--spacing-1700, 8.5rem);
+      justify-content: center;
+      align-items: center;
+      gap: var(--spacing-200, 1rem);
+      border-radius: 1.40625rem;
+      background: var(--colors-orange-500, #FC7614);
+      border: 0;
+      transition: ease-in-out 0.3s;
+    }
+
+    .submit-btn:hover {
+      background: var(--colors-white, #FFF);
+      cursor: pointer;
+    }
+
+    .submit-btn:active {
+      background: var(--colors-orange-900, #fb3f00);
+    }
+
+    .rating-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: var(--spacing-300, 1.5rem);
+    }
+
+    .rating {
+      height: 0;
+      width: 0;
+      opacity: 0;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    .rating-content {
+      display: flex;
+      width: 3.1875rem;
+      height: 3.1875rem; 
+      justify-content: center;
+      align-items: center;
+      border-radius: 9999px;
+      background: var(--colors-grey-900, #262E38);
+      transition: ease-in-out 0.3s;
+    }
+
+    .rating-content span {
+      color: var(--colors-grey-500, #969FAD);
+      text-align: center;
+
+      font-feature-settings: 'liga' off, 'clig' off;
+      /* Text Preset 3 - Overpass Bold - 16px - 24px Line Height - 0.2px Line Spacing */
+      font-family: Overpass;
+      font-size: 1rem;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 1.5rem; /* 150% */
+      letter-spacing: 0.0125rem;
+    }
+
+    .rating-content:hover {
+      background: var(--colors-white, #FFF);
+      cursor: pointer;
+    }
+    
+    .rating-container input[type=radio]:checked + .rating-content {
+      background: var(--colors-orange-500, #FC7614);
+    }
+
+    
+  </style>
+
+</head>
+<body>
+
+  <main>
+
+    <button class="icon-wrapper" type="button">
+      <img src="images/icon-star.svg" alt="star">
+    </button>
+
+    <form>
+      <fieldset class="form-body">
+        <div class="text-content">
+          <h1>
+            How did we do?
+          </h1>
+          <p>
+            Please let us know how we did with your support request. All feedback is appreciated to help us improve our offering!
+          </p>
+
+        <div class="rating-container">
+          <input type="radio" name="rating" id="rating-1" class="rating">
+          <label for="rating-1" class="rating-content"><span>1</span></label> 
+
+          <input type="radio" name="rating" id="rating-2" class="rating">
+          <label for="rating-2" class="rating-content"><span>2</span></label> 
+
+          <input type="radio" name="rating" id="rating-3" class="rating">
+          <label for="rating-3" class="rating-content"><span>3</span></label> 
+
+          <input type="radio" name="rating" id="rating-4" class="rating">
+          <label for="rating-4" class="rating-content"><span>4</span></label> 
+
+          <input type="radio" name="rating" id="rating-5" class="rating">
+          <label for="rating-5" class="rating-content"><span>5</span></label> 
+        </div>
+
+        </div>
+
+        <input class="submit-btn" type="submit" value="SUBMIT"/>
+      </fieldset>
+    </form>
+
+  </main>
+
+
+</body>
+</html>
