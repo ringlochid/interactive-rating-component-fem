@@ -12,6 +12,7 @@ function process_error_msg(e) {
     msgdiv.style.alignSelf = 'center';
     msgdiv.textContent = e.message;
     msgdiv.classList.add("error-msg");
+    msgdiv.setAttribute("role", "alert");
     rating_page.appendChild(msgdiv);
 }
 
@@ -45,6 +46,8 @@ function process_rating_submission() {
         rating_page.classList.add("deactivate");
         success_page.classList.remove("deactivate");
         clear_option();
+        success_page.setAttribute("tabindex", "-1");
+        success_page.focus();
     } catch (e) {
         process_error_msg(e);
     }
