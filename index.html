@@ -127,18 +127,24 @@
 
     .rating-container {
       display: flex;
+      align-self: stretch;
       justify-content: center;
       align-items: center;
       gap: var(--spacing-300, 1.5rem);
+      border: 0;
+      padding: 0;
     }
 
-    .rating {
-      height: 0;
-      width: 0;
-      opacity: 0;
+    .sr-only {
       position: absolute;
-      left: 0;
-      top: 0;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
     }
 
     .rating-content {
@@ -150,6 +156,7 @@
       border-radius: 9999px;
       background: var(--colors-grey-900, #262E38);
       transition: ease-in-out 0.3s;
+      box-sizing: border-box;
     }
 
     .rating-content span {
@@ -175,6 +182,12 @@
       background: var(--colors-orange-500, #FC7614);
     }
 
+    .rating-container input[type="radio"]:focus-visible + .rating-content {
+      background: var(--colors-white, #FFF);
+      color: var(--colors-orange-500, #FC7614);
+      outline: 2px solid var(--colors-orange-500, #FC7614);
+      outline-offset: 2px;
+    }
     
   </style>
 
@@ -188,37 +201,38 @@
     </button>
 
     <form>
-      <fieldset class="form-body">
+      <div class="form-body">
+        
         <div class="text-content">
-          <h1>
-            How did we do?
-          </h1>
-          <p>
+          <h1 id="rating-title">How did we do?</h1>
+          <p id="rating-desc">
             Please let us know how we did with your support request. All feedback is appreciated to help us improve our offering!
           </p>
 
-        <div class="rating-container">
-          <input type="radio" name="rating" id="rating-1" class="rating">
-          <label for="rating-1" class="rating-content"><span>1</span></label> 
+          <fieldset class="rating-container" aria-labelledby="rating-title" aria-describedby="rating-desc">
+            
+            <legend class="sr-only">Rating: 1 to 5</legend>
 
-          <input type="radio" name="rating" id="rating-2" class="rating">
-          <label for="rating-2" class="rating-content"><span>2</span></label> 
+            <input type="radio" name="rating" id="rating-1" class="sr-only" value="1">
+            <label for="rating-1" class="rating-content"><span>1</span></label> 
 
-          <input type="radio" name="rating" id="rating-3" class="rating">
-          <label for="rating-3" class="rating-content"><span>3</span></label> 
+            <input type="radio" name="rating" id="rating-2" class="sr-only" value="2">
+            <label for="rating-2" class="rating-content"><span>2</span></label> 
 
-          <input type="radio" name="rating" id="rating-4" class="rating">
-          <label for="rating-4" class="rating-content"><span>4</span></label> 
+            <input type="radio" name="rating" id="rating-3" class="sr-only" value="3">
+            <label for="rating-3" class="rating-content"><span>3</span></label> 
 
-          <input type="radio" name="rating" id="rating-5" class="rating">
-          <label for="rating-5" class="rating-content"><span>5</span></label> 
-        </div>
+            <input type="radio" name="rating" id="rating-4" class="sr-only" value="4">
+            <label for="rating-4" class="rating-content"><span>4</span></label> 
 
+            <input type="radio" name="rating" id="rating-5" class="sr-only" value="5">
+            <label for="rating-5" class="rating-content"><span>5</span></label> 
+          </fieldset>
         </div>
 
         <input class="submit-btn" type="submit" value="SUBMIT"/>
-      </fieldset>
-    </form>
+      </div>
+    </form> 
 
   </main>
 
