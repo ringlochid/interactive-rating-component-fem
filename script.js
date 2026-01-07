@@ -64,5 +64,8 @@ options.forEach((o) => {
 })
 
 refresh_button.addEventListener("click", () => {
+    refresh_button.classList.remove("triggered");
+    void refresh_button.offsetWidth;
+    refresh_button.classList.add("triggered");
     clear_option();
 })

@@ -76,8 +76,32 @@
       border: 0;
     }
 
+    .icon-wrapper .icon {
+      display: grid;
+      place-items: center;
+      transform-origin: center center;
+    }
+
     .icon-wrapper img {
+      height: 0.87225rem;
+      width: 0.87225rem;
       flex-shrink: 0;
+    }
+
+    .icon-wrapper.triggered > .icon {
+      animation: spin-icon 1s ease-in-out;
+    }
+
+    @keyframes spin-icon {
+      0% {
+        transform: scale(1)
+      }
+      50% {
+        transform: scale(1.2);
+      }
+      100% {
+        transform: scale(1) rotate(-360deg);
+      }
     }
 
     .form-body {
@@ -185,7 +209,8 @@
       align-items: center;
       border-radius: 9999px;
       background: var(--colors-grey-900, #262E38);
-      transition: ease-in-out 0.3s;
+      transition: ease-in 0.3s;
+      transition: ease-out 0.5s;
       box-sizing: border-box;
       @media (width < 768px) {
         width: 2.625rem;
@@ -306,7 +331,7 @@
 
     <div class="rating-page">
       <button class="icon-wrapper" type="button">
-        <img src="images/icon-star.svg" alt="star">
+        <div class="icon"><img src="images/icon-star.svg" alt="star"></div>
       </button>
 
       <form>
